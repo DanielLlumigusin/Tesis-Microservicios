@@ -101,11 +101,13 @@ cd ../calificaciones-microservicio
 docker build -t calificaciones-service .
 
 minikube start
+```
 Aplica los archivos Kubernetes:
-
+```bash
 kubectl apply -f kubernetes/
+```
 Accede a los servicios vía Ingress:
-
+```bash
 minikube tunnel
 ```
 
