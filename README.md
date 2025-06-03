@@ -87,8 +87,8 @@ simulacion-moodle-microservicios/
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/tu_usuario/simulacion-moodle-microservicios.git
-cd simulacion-moodle-microservicios
+git clone https://github.com/DanielLlumigusin/Tesis-Microservicios.git
+cd tesis-microservicios
 Dockeriza cada microservicio (cada carpeta tiene su Dockerfile):
 
 cd usuarios-microservicio
