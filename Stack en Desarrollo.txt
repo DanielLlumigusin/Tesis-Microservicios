@@ -1,0 +1,14 @@
+Servicio			Lenguaje			BD
+Usuarios			Java Spring Boot		PostgreSQL
+Cursos				Node.js + Express		MongoDB
+Calificaciones			Python Flask			MySQL
+
+Microservicios separados
+
+Comportamiento de Moodle con estos tres microservicios:
+
+servicio-usuarios (registro, login, roles)
+
+servicio-cursos (crear cursos, listar, inscripción)
+
+servicio-calificaciones (registrar y consultar notas)
