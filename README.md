@@ -96,9 +96,6 @@ git clone https://github.com/tu_usuario/simulacion-moodle-microservicios.git
 cd simulacion-moodle-microservicios
 Dockeriza cada microservicio (cada carpeta tiene su Dockerfile):
 
-bash
-Copy
-Edit
 cd usuarios-microservicio
 docker build -t usuarios-service .
 
@@ -107,24 +104,16 @@ docker build -t cursos-service .
 
 cd ../calificaciones-microservicio
 docker build -t calificaciones-service .
-Levanta Minikube o tu clúster:
 
-bash
-Copy
-Edit
 minikube start
 Aplica los archivos Kubernetes:
 
-bash
-Copy
-Edit
 kubectl apply -f kubernetes/
 Accede a los servicios vía Ingress:
 
-bash
-Copy
-Edit
 minikube tunnel
+```
+
 Accede desde el navegador o Postman usando rutas como:
 
 http://localhost/api/usuarios/
@@ -155,17 +144,4 @@ Estudio de DevOps con microservicios
 
 Simulaciones de Moodle sin modificar el monolito
 
-🧠 Contribuciones
-Las contribuciones son bienvenidas. Puedes:
-
-Mejorar los servicios
-
-Agregar pruebas unitarias o de integración
-
-Incluir frontend web o móvil en Flutter
-
-Documentar con Swagger
-
-📝 Licencia
-Este proyecto es de uso libre con fines académicos. Puedes adaptarlo para tus propias pruebas o tesis.
 
