@@ -30,7 +30,7 @@ Simular el proceso de migración de funcionalidades esenciales de Moodle (usuari
 ---
 
 ## 📦 Estructura del Proyecto
-
+```bash
 simulacion-moodle-microservicios/
 ├── usuarios-microservicio/ # Spring Boot - registro, login, roles
 ├── cursos-microservicio/ # Node.js - cursos e inscripciones
@@ -40,13 +40,8 @@ simulacion-moodle-microservicios/
 │ ├── cursos-deployment.yaml
 │ ├── calificaciones-deployment.yaml
 │ ├── ingress.yaml
-├── frontend/ (opcional) # Interfaz visual o cliente móvil/web
 └── README.md # Este documento
-
-yaml
-Copy
-Edit
-
+```
 ---
 
 ## 📐 Microservicios Incluidos
