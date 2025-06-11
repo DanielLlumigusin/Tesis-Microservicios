@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  postgres-usuarios:
+    image: postgres:15
+    container_name: postgres-usuarios
+    environment:
+      POSTGRES_DB: usuariosdb
+      POSTGRES_USER: Espe_2025
+      POSTGRES_PASSWORD: Espe_2025.@
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_usuarios_data:/var/lib/postgresql/data
+    networks:
+      - moodle-net
+
+  mongodb-cursos:
+    image: mongo:6
+    container_name: mongodb-cursos
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_cursos_data:/data/db
+    networks:
+      - moodle-net
+
+  mysql-calificaciones:
+    image: mysql:8
+    container_name: mysql-calificaciones
+    environment:
+      MYSQL_ROOT_PASSWORD: Espe_2025.@
+      MYSQL_DATABASE: calificacionesdb
+      MYSQL_USER: Espe_2025
+      MYSQL_PASSWORD: Espe_2025.@
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_calificaciones_data:/var/lib/mysql
+    networks:
+      - moodle-net
+
+networks:
+  moodle-net:
+    driver: bridge
+
+volumes:
+  postgres_usuarios_data:
+  mongo_cursos_data:
+  mysql_calificaciones_data:
