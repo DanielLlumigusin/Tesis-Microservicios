@@ -28,6 +28,13 @@ Simular el proceso de migración de funcionalidades esenciales de Moodle (usuari
 | Herramientas          | Postman, Curl, Git, VSCode   |
 
 ---
+## Puertos Utilizados
+| Componente            | Puertos           |
+|-----------------------|----------------------|
+|Microservicio Usuarios| 8080   |
+|Microservicio Cursos | 3000 |
+|Microservicio Notas | 5000 | 
+---
 
 ## 📦 Estructura del Proyecto
 ```bash
