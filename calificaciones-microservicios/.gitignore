@@ -1,1 +1,47 @@
-.venv
+# Entorno virtual
+.venv/
+venv/
+ENV/
+env/
+
+# Compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos de log
+*.log
+
+# Archivos de configuración locales
+.env
+*.env
+
+# Archivos de base de datos o backups locales
+*.sqlite3
+*.db
+*.bak
+
+# Ignorar carpetas __pycache__ específicas
+config/__pycache__/
+controllers/__pycache__/
+models/__pycache__/
+routes/__pycache__/
+services/__pycache__/
+
+# Pytest / Coverage
+.cache/
+.coverage
+.tox/
+htmlcov/
+.pytest_cache/
+
+# VSCode / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de distribución
+dist/
+build/
+*.egg-info/

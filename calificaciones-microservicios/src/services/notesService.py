@@ -1,0 +1,10 @@
+def Notes(dbt, session):
+    id = dbt.ref("id")
+    courseid = dbt.ref("courseid")
+    userid = dbt.ref("userid")
+    content = dbt.ref("content")
+    format = dbt.ref("format")
+    created = dbt.ref("created")
+    lastmodified = dbt.ref("lastmodified")
+    usermodified = dbt.ref("usermodified")
+    publishstate = dbt.ref("publishstate")
