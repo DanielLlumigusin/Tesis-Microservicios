@@ -34,9 +34,25 @@ services:
       MYSQL_USER: Espe_2025
       MYSQL_PASSWORD: Espe_2025.@
     ports:
-      - "3306:3306"
+      - "3307:3306"  # Mapea puerto 3306 del contenedor al 3307 local para evitar conflictos
     volumes:
       - mysql_calificaciones_data:/var/lib/mysql
+    networks:
+      - moodle-net
+
+  calificaciones-service:
+    image: danielllumigusin/calificaciones-microservicios:latest
+    container_name: calificaciones-service
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=mysql-calificaciones
+      - DB_PORT=3306
+      - DB_NAME=calificacionesdb
+      - DB_USER=Espe_2025
+      - DB_PASSWORD=Espe_2025.@
+    depends_on:
+      - mysql-calificaciones
     networks:
       - moodle-net
 

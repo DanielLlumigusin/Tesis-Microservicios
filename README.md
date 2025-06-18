@@ -21,7 +21,7 @@ Simular el proceso de migración de funcionalidades esenciales de Moodle (usuari
 |-----------------------|----------------------|
 | Microservicio Usuarios| Java Spring Boot + PostgreSQL |
 | Microservicio Cursos  | Node.js + Express + MongoDB  |
-| Microservicio Notas   | Python Flask + MySQL |
+| Microservicio Calificaciones   | Python Flask + MySQL |
 | Orquestación          | Kubernetes + Ingress (NGINX) |
 | Contenedores          | Docker               |
 | API Gateway           | NGINX Ingress        |
@@ -33,7 +33,7 @@ Simular el proceso de migración de funcionalidades esenciales de Moodle (usuari
 |-----------------------|----------------------|
 |Microservicio Usuarios| 8080   |
 |Microservicio Cursos | 3000 |
-|Microservicio Notas | 5000 | 
+|Microservicio Calificaciones | 5000 | 
 ---
 
 ## 📦 Estructura del Proyecto
@@ -123,6 +123,14 @@ Accede desde el navegador o Postman usando rutas como:
 http://localhost/api/usuarios/
 
 http://localhost/api/cursos/
+
+
+Calificaciones
+
+| Metodo                |        Ruta          | Accion               |
+|-----------------------|----------------------|----------------------|
+| GET                   | http://localhost:5000/api/calificaciones | Visualizar todas las notas |
+
 
 http://localhost/api/calificaciones/
 
