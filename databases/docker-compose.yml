@@ -34,7 +34,7 @@ services:
       MYSQL_USER: Espe_2025
       MYSQL_PASSWORD: Espe_2025.@
     ports:
-      - "3307:3306"  # Mapea puerto 3306 del contenedor al 3307 local para evitar conflictos
+      - "3307:3306"
     volumes:
       - mysql_calificaciones_data:/var/lib/mysql
     networks:
@@ -53,6 +53,18 @@ services:
       - DB_PASSWORD=Espe_2025.@
     depends_on:
       - mysql-calificaciones
+    networks:
+      - moodle-net
+
+  cursos-service:
+    image: danielllumigusin/cursos-microservicios:latest
+    container_name: cursos-service
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URL=mongodb://mongodb-cursos:27017
+    depends_on:
+      - mongodb-cursos
     networks:
       - moodle-net
 
