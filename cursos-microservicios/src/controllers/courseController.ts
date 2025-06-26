@@ -12,6 +12,22 @@ export const getCourses = async (_req: Request, res: Response) => {
     }
 };
 
+export const getCourseById = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const course = await Course.findById(id).lean();
+
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        return res.status(200).json(course);
+    } catch (error) {
+        console.error('Error fetching course by ID:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
 // Crear un nuevo curso
 export const createCourse = async (req: Request, res: Response) => {
     try {
@@ -25,16 +41,17 @@ export const createCourse = async (req: Request, res: Response) => {
 };
 
 // Actualizar un curso existente
-export const updateCourse = async (req: Request, res: Response) => {
+export const updateCourseById = async (req: Request, res: Response) => {
     try {
         const course = await Course.findById(req.body.id);
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
         }
-
+        course.category = req.body.category ?? course.category;
         course.fullname = req.body.fullname ?? course.fullname;
         course.shortname = req.body.shortname ?? course.shortname;
         course.summary = req.body.summary ?? course.summary;
+        course.visible = req.body.visible ?? course.visible;
         course.startdate = req.body.startdate ?? course.startdate;
         course.enddate = req.body.enddate ?? course.enddate;
 

@@ -120,12 +120,27 @@ minikube tunnel
 
 Accede desde el navegador o Postman usando rutas como:
 
-http://localhost/api/usuarios/
 
-http://localhost/api/cursos/
+### Rutas de microservicio de Asistencia (Attendance)
 
+| Metodo                |        Ruta          | Accion               |
+|-----------------------|----------------------|----------------------| 
+| GET                   | http://localhost:5000/api/attendance | Visualizar todas las asistencias |
 
-Calificaciones
+http://localhost/api/attendance/
+
+### Rutas de microservicio Cursos
+
+| Metodo                |        Ruta          | Accion               |
+|-----------------------|----------------------|----------------------|
+| GET                   | /api/cursos | Visualizar todos los cursos |
+| GET                   | /api/cursos/{id}     | Obtener un curso específico por ID JSON curso |
+| POST                  | /api/cursos          | Crear curso existente JSON con campos actualizados |
+| PUT                   | /api/cursos/{id}     | Actualizar curso existente JSON con campos actualizados |
+| DELETE                | /api/cursos/{id}     | Eliminar curso         |
+
+### Rutas de microservicio Calificaciones 
+
 
 | Metodo                |        Ruta          | Accion               |
 |-----------------------|----------------------|----------------------|

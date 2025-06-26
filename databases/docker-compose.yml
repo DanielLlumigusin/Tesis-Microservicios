@@ -1,6 +1,6 @@
-version: '3.9'
-
 services:
+  # -----------------------
+  # 🐘 PostgreSQL para usuarios-service
   postgres-usuarios:
     image: postgres:15
     container_name: postgres-usuarios
@@ -15,6 +15,7 @@ services:
     networks:
       - moodle-net
 
+  # 🍃 MongoDB para cursos-service
   mongodb-cursos:
     image: mongo:6
     container_name: mongodb-cursos
@@ -25,6 +26,7 @@ services:
     networks:
       - moodle-net
 
+  # 🐬 MySQL para calificaciones-service
   mysql-calificaciones:
     image: mysql:8
     container_name: mysql-calificaciones
@@ -40,6 +42,24 @@ services:
     networks:
       - moodle-net
 
+  # 🐬 MySQL para Moodle
+  mysql-moodle:
+    image: mysql:8
+    container_name: mysql-moodle
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Espe_2025.@
+      MYSQL_DATABASE: moodledb
+      MYSQL_USER: moodleuser
+      MYSQL_PASSWORD: moodlepass
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_moodle_data:/var/lib/mysql
+    networks:
+      - moodle-net
+
+  # 📚 Microservicio de calificaciones (Flask)
   calificaciones-service:
     image: danielllumigusin/calificaciones-microservicios:latest
     container_name: calificaciones-service
@@ -56,6 +76,7 @@ services:
     networks:
       - moodle-net
 
+  # 📘 Microservicio de cursos (Bun + Mongo)
   cursos-service:
     image: danielllumigusin/cursos-microservicios:latest
     container_name: cursos-service
@@ -68,6 +89,7 @@ services:
     networks:
       - moodle-net
 
+  # 👤 Microservicio de usuarios (Spring + Postgres)
   usuarios-service:
     image: danielllumigusin/usuarios-microservicios:latest
     container_name: usuarios-service
@@ -82,11 +104,34 @@ services:
     networks:
       - moodle-net
 
+  # 🎓 Moodle personalizado
+  moodle-service:
+    image: danielllumigusin/moodle-microservicios:latest
+    container_name: moodle-service
+    ports:
+      - "8088:80"
+    volumes:
+      - moodledata:/var/www/moodledata
+      - ./plugins/microservicios:/var/www/html/local/microservicios  # Desarrollo local del plugin
+    environment:
+      - MOODLE_URL=http://localhost:8088
+    depends_on:
+      - mysql-moodle
+      - usuarios-service
+      - cursos-service
+      - calificaciones-service
+    networks:
+      - moodle-net
+
+# 🔌 Red común
 networks:
   moodle-net:
     driver: bridge
 
+# 📦 Volúmenes persistentes
 volumes:
   postgres_usuarios_data:
   mongo_cursos_data:
   mysql_calificaciones_data:
+  mysql_moodle_data:
+  moodledata:

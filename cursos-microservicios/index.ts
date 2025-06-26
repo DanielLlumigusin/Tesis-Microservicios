@@ -4,7 +4,7 @@ import connectDB from './src/config/database';
 
 const app = express();
 app.use(express.json());
-app.use('/courses', courseRoutes);
+app.use('/api', courseRoutes);
 
 connectDB();
 
