@@ -122,14 +122,15 @@ Accede desde el navegador o Postman usando rutas como:
 
 
 ### Rutas de microservicio de Asistencia (Attendance)
+Puerto 5000 
 
 | Metodo                |        Ruta          | Accion               |
 |-----------------------|----------------------|----------------------| 
-| GET                   | http://localhost:5000/api/attendance | Visualizar todas las asistencias |
+| GET                   | /api/attendance | Visualizar todas las asistencias |
 
-http://localhost/api/attendance/
 
 ### Rutas de microservicio Cursos
+Puerto 3000
 
 | Metodo                |        Ruta          | Accion               |
 |-----------------------|----------------------|----------------------|
@@ -140,11 +141,11 @@ http://localhost/api/attendance/
 | DELETE                | /api/cursos/{id}     | Eliminar curso         |
 
 ### Rutas de microservicio Calificaciones 
-
+Puerto 8080
 
 | Metodo                |        Ruta          | Accion               |
 |-----------------------|----------------------|----------------------|
-| GET                   | http://localhost:5000/api/calificaciones | Visualizar todas las notas |
+| GET                   | /api/calificaciones | Visualizar todas las notas |
 
 
 http://localhost/api/calificaciones/
