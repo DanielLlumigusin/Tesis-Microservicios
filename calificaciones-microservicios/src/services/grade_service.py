@@ -1,59 +1,105 @@
-from models.local_models import GradeSynced
-from models.moodle_models import GradeMoodle
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from config.config import Config
+from models.local_models import BaseLocal, GradeSynced
+from models.moodle_models import BaseMoodle, GradeMoodle
 
-local_engine = create_engine(Config.MYSQL_URI_LOCAL)
-moodle_engine = create_engine(Config.MYSQL_URI_MOODLE)
 
-LocalSession = sessionmaker(bind=local_engine)
-MoodleSession = sessionmaker(bind=moodle_engine)
+engine_local = create_engine(Config.MYSQL_URI_LOCAL)
+SessionLocal = sessionmaker(bind=engine_local)
+BaseLocal.metadata.create_all(engine_local)
 
-def sync_grades():
-    msession = MoodleSession()
-    lsession = LocalSession()
-    grades = msession.query(GradeMoodle).all()
+engine_moodle = create_engine(Config.MYSQL_URI_MOODLE)
+SessionMoodle = sessionmaker(bind=engine_moodle)
+BaseMoodle.metadata.create_all(engine_moodle)
 
-    for g in grades:
-        lsession.merge(GradeSynced(**g.__dict__))  # Reemplaza o inserta
-    lsession.commit()
-    msession.close()
-    lsession.close()
-    return len(grades)
+def clean_instance(instance):
+    # Convierte instancia SQLAlchemy en dict solo con columnas, sin _sa_instance_state
+    return {c.name: getattr(instance, c.name) for c in instance.__table__.columns}
 
 def get_grades(source='local'):
-    Session = LocalSession if source == 'local' else MoodleSession
-    session = Session()
-    model = GradeSynced if source == 'local' else GradeMoodle
-    data = session.query(model).all()
-    session.close()
-    return data
+    if source == 'local':
+        session = SessionLocal()
+        grades = session.query(GradeSynced).all()
+        session.close()
+        return grades
+    elif source == 'moodle':
+        session = SessionMoodle()
+        grades = session.query(GradeMoodle).all()
+        session.close()
+        return grades
+    else:
+        raise ValueError("source debe ser 'local' o 'moodle'")
 
 def create_grade(data, target='local'):
-    Session = LocalSession if target == 'local' else MoodleSession
-    Model = GradeSynced if target == 'local' else GradeMoodle
-    session = Session()
-    grade = Model(**data)
-    session.add(grade)
-    session.commit()
-    session.close()
+    if target == 'local':
+        session = SessionLocal()
+        grade = GradeSynced(**data)
+        session.add(grade)
+        session.commit()
+        created_id = grade.id
+        session.close()
+        return created_id
+    else:
+        raise ValueError("target solo soporta 'local'")
 
 def update_grade(grade_id, data, target='local'):
-    Session = LocalSession if target == 'local' else MoodleSession
-    Model = GradeSynced if target == 'local' else GradeMoodle
-    session = Session()
-    grade = session.query(Model).filter_by(id=grade_id).first()
-    for k, v in data.items():
-        setattr(grade, k, v)
-    session.commit()
-    session.close()
+    if target == 'local':
+        session = SessionLocal()
+        grade = session.query(GradeSynced).filter_by(id=grade_id).first()
+        if not grade:
+            session.close()
+            return False
+        for key, value in data.items():
+            setattr(grade, key, value)
+        session.commit()
+        session.close()
+        return True
+    else:
+        raise ValueError("target solo soporta 'local'")
 
 def delete_grade(grade_id, target='local'):
-    Session = LocalSession if target == 'local' else MoodleSession
-    Model = GradeSynced if target == 'local' else GradeMoodle
-    session = Session()
-    grade = session.query(Model).filter_by(id=grade_id).first()
-    session.delete(grade)
-    session.commit()
-    session.close()
+    if target == 'local':
+        session = SessionLocal()
+        grade = session.query(GradeSynced).filter_by(id=grade_id).first()
+        if not grade:
+            session.close()
+            return False
+        session.delete(grade)
+        session.commit()
+        session.close()
+        return True
+    else:
+        raise ValueError("target solo soporta 'local'")
+
+def sync_grades():
+    """
+    Extrae notas de Moodle y las guarda en la BD local,
+    actualizando o insertando según sea necesario.
+    """
+    session_local = SessionLocal()
+    session_moodle = SessionMoodle()
+
+    grades_moodle = session_moodle.query(GradeMoodle).all()
+
+    count_synced = 0
+
+    for grade in grades_moodle:
+        grade_data = clean_instance(grade)
+        # Buscar si ya existe
+        existing = session_local.query(GradeSynced).filter_by(id=grade_data['id']).first()
+        if existing:
+            # Actualizar campos
+            for k, v in grade_data.items():
+                setattr(existing, k, v)
+        else:
+            # Insertar nuevo registro
+            new_grade = GradeSynced(**grade_data)
+            session_local.add(new_grade)
+        count_synced += 1
+
+    session_local.commit()
+    session_local.close()
+    session_moodle.close()
+
+    return count_synced

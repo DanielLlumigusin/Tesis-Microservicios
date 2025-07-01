@@ -1,18 +1,11 @@
 from flask import Blueprint, request, jsonify
-from services.grade_service import (
-    get_grades,
-    create_grade,
-    update_grade,
-    delete_grade,
-    sync_grades
-)
+from services.grade_service import get_grades, create_grade, update_grade, delete_grade, sync_grades
 
 grades_bp = Blueprint('grades', __name__)
 
 def to_dict(obj):
     return {c.key: getattr(obj, c.key) for c in obj.__table__.columns}
 
-# 🔁 Sincronizar desde Moodle a microservicio
 @grades_bp.route('/sync', methods=['POST'])
 def sync():
     try:
@@ -21,7 +14,6 @@ def sync():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# 📄 Listar calificaciones
 @grades_bp.route('/grades', methods=['GET'])
 def list_grades():
     try:
@@ -31,7 +23,6 @@ def list_grades():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ➕ Crear una calificación
 @grades_bp.route('/grades', methods=['POST'])
 def create():
     try:
@@ -41,7 +32,6 @@ def create():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-# ✏️ Actualizar calificación
 @grades_bp.route('/grades/<int:grade_id>', methods=['PUT'])
 def update(grade_id):
     try:
@@ -54,7 +44,6 @@ def update(grade_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-# ❌ Eliminar calificación
 @grades_bp.route('/grades/<int:grade_id>', methods=['DELETE'])
 def delete(grade_id):
     try:
