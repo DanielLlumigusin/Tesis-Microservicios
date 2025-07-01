@@ -52,10 +52,22 @@ class SyncService {
                 'timecreated'  => time(),
                 'timemodified' => time(),
             ];
-            $DB->insert_record('course', $newcourse);
+            $newid = $DB->insert_record('course', $newcourse);
 
-            // También crear el curso en el microservicio si es necesario (POST)
-            $curl->post(self::get_endpoint(), json_encode($remote));
+            // Construir payload para enviar al microservicio
+            $remote_payload = [
+                'id'        => $newid,
+                'category'  => (int)$newcourse->category,
+                'fullname'  => $newcourse->fullname,
+                'shortname' => $newcourse->shortname,
+                'summary'   => $newcourse->summary,
+                'visible'   => (int)$newcourse->visible,
+                'startdate' => (int)$newcourse->startdate,
+                'enddate'   => (int)$newcourse->enddate,
+            ];
+
+            // Enviar al microservicio
+            $curl->post(self::get_endpoint(), json_encode($remote_payload));
         }
     }
 }
