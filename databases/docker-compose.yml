@@ -112,7 +112,7 @@ services:
       - "8088:80"
     volumes:
       - ./moodledata:/var/www/moodledata
-      - ./plugins/microservicios:/var/www/html/local/microservicios  # Desarrollo local del plugin
+      - ./plugins/local/syncmicroservicios:/var/www/html/local/syncmicroservicios
     environment:
       - MOODLE_URL=http://localhost:8088
     depends_on:

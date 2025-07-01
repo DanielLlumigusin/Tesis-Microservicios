@@ -606,7 +606,7 @@ $cache = array (
     ),
     'local' => 
     array (
-      'microservicios' => '/var/www/html/local/microservicios',
+      'syncmicroservicios' => '/var/www/html/local/syncmicroservicios',
     ),
     'h5plib' => 
     array (
@@ -4764,6 +4764,7 @@ $cache = array (
     'invalid_state_exception' => '/var/www/html/lib/classes/exception/invalid_state_exception.php',
     'js_writer' => '/var/www/html/lib/classes/output/js_writer.php',
     'lang_string' => '/var/www/html/lib/classes/lang_string.php',
+    'local_syncmicroservicios\\service\\SyncService' => '/var/www/html/local/syncmicroservicios/classes/service/SyncService.php',
     'logstore_database\\helper' => '/var/www/html/admin/tool/log/store/database/classes/helper.php',
     'logstore_database\\log\\store' => '/var/www/html/admin/tool/log/store/database/classes/log/store.php',
     'logstore_database\\privacy\\provider' => '/var/www/html/admin/tool/log/store/database/classes/privacy/provider.php',
@@ -7417,6 +7418,7 @@ $cache = array (
       ),
       'local' => 
       array (
+        'syncmicroservicios' => '/var/www/html/local/syncmicroservicios/lib.php',
       ),
       'h5plib' => 
       array (
@@ -7768,6 +7770,7 @@ $cache = array (
       ),
       'local' => 
       array (
+        'syncmicroservicios' => '/var/www/html/local/syncmicroservicios/settings.php',
       ),
       'h5plib' => 
       array (
