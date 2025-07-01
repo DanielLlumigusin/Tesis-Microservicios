@@ -111,7 +111,7 @@ services:
     ports:
       - "8088:80"
     volumes:
-      - moodledata:/var/www/moodledata
+      - ./moodledata:/var/www/moodledata
       - ./plugins/microservicios:/var/www/html/local/microservicios  # Desarrollo local del plugin
     environment:
       - MOODLE_URL=http://localhost:8088
